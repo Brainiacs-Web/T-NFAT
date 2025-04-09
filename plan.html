@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NFAT 50-Day Stage Planner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    .stage-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(to right, #0984e3, #6c5ce7);
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-top: 40px;
+    }
+
+    .day-plan {
+      background: #fff;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .day-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #2980b9;
+    }
+
+    .checklist input {
+      margin-right: 8px;
+    }
+
+    .complete {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 30px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🔥 NFAT 2025 — 50-Day Daily Prep Planner</h1>
+
+<div id="planner"></div>
+
+<div class="footer">
+  Earn each rank. You’re not studying, you’re leveling up. 🎮📚
+</div>
+
+<script>
+  const subjects = {
+    physics: [
+      "Kinematics", "Laws of Motion", "Work & Energy", "Electrostatics",
+      "Current Electricity", "Magnetism", "Oscillations", "Waves",
+      "Modern Physics", "Semiconductors", "Communication Systems", "Gravitation",
+      "Capacitance", "Ray Optics", "Wave Optics", "Units & Dimensions", "Fluid Mechanics"
+    ],
+    chemistry: [
+      "Atomic Structure", "Chemical Bonding", "Mole Concept", "Periodic Table",
+      "Thermodynamics", "Equilibrium", "Redox", "GOC",
+      "Hydrocarbons", "Alcohols, Phenols", "Polymers", "Biomolecules",
+      "Coordination Compounds", "d & f Block", "Environmental Chemistry", "Surface Chemistry"
+    ],
+    math: [
+      "Sets & Relations", "Trigonometry", "Quadratic Equations", "Progressions",
+      "Binomial Theorem", "Complex Numbers", "Matrices", "Determinants",
+      "Limits", "Continuity", "Differentiation", "Integration",
+      "Application of Derivatives", "Probability", "P&C", "Straight Lines",
+      "Circle", "Vectors", "3D Geometry"
+    ],
+    aptitude: [
+      "Grammar Rules", "Coding-Decoding", "Logical Series", "Antonyms/Synonyms",
+      "Data Interpretation", "Current Affairs", "GK: Science & Awards", "Clock & Calendar",
+      "Puzzle Questions", "Analogy", "Reading Comprehension"
+    ]
+  };
+
+  const stageTitles = {
+    1: "🚀 IGNITE (Days 1–10)",
+    11: "🛠️ GRIND (Days 11–25)",
+    26: "🔒 LOCK (Days 26–40)",
+    41: "🏁 PEAK (Days 41–50)"
+  };
+
+  const planner = document.getElementById("planner");
+
+  function getChapters(list, i) {
+    return [list[i % list.length], list[(i + 1) % list.length]];
+  }
+
+  for (let day = 1; day <= 50; day++) {
+    if (stageTitles[day]) {
+      const stageDiv = document.createElement("div");
+      stageDiv.className = "stage-title";
+      stageDiv.textContent = stageTitles[day];
+      planner.appendChild(stageDiv);
+    }
+
+    const div = document.createElement("div");
+    div.className = "day-plan";
+
+    const title = document.createElement("div");
+    title.className = "day-title";
+    title.textContent = `📅 Day ${day}`;
+
+    const list = document.createElement("ul");
+    list.className = "checklist";
+
+    const pChaps = getChapters(subjects.physics, day - 1);
+    const cChaps = getChapters(subjects.chemistry, day - 1);
+    const mChaps = getChapters(subjects.math, day - 1);
+    const aTask = subjects.aptitude[day % subjects.aptitude.length];
+
+    const tasks = [
+      `Physics: ${pChaps[0]}, ${pChaps[1]}`,
+      `Chemistry: ${cChaps[0]}, ${cChaps[1]}`,
+      `Math: ${mChaps[0]}, ${mChaps[1]}`,
+      `Aptitude: ${aTask}`
+    ];
+
+    tasks.forEach(task => {
+      const li = document.createElement("li");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.onchange = () => {
+        li.classList.toggle("complete", checkbox.checked);
+      };
+      li.appendChild(checkbox);
+      li.appendChild(document.createTextNode(task));
+      list.appendChild(li);
+    });
+
+    div.appendChild(title);
+    div.appendChild(list);
+    planner.appendChild(div);
+  }
+</script>
+
+</body>
+</html>
